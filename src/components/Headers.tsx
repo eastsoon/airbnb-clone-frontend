@@ -7,6 +7,7 @@ import {
   useColorMode,
   useDisclosure,
   useColorModeValue,
+  Stack,
 } from "@chakra-ui/react";
 import LoginModal from "./LoginModal";
 import { FaAirbnb, FaMoon, FaSun } from "react-icons/fa";
@@ -26,10 +27,22 @@ export default function Headers() {
   const logoColor = useColorModeValue("red.500", "red.200");
   const Icon = useColorModeValue(FaMoon, FaSun);
   return (
-    <HStack
+    <Stack
       justifyContent={"space-between"}
+      alignItems={"center"}
       py={"5"}
-      px={"20"}
+      px={{
+        base: "10",
+        lg: "40",
+      }}
+      direction={{
+        sm: "column",
+        md: "row",
+      }}
+      spacing={{
+        sm: 4,
+        md: 0,
+      }}
       borderBottomWidth={1}
     >
       <Box color={logoColor}>
@@ -51,6 +64,6 @@ export default function Headers() {
       </HStack>
       <LoginModal isOpen={isLoginOpen} onClose={onLoginClose} />
       <SignUpModal isOpen={isSignUpOpen} onClose={onSignUpClose} />
-    </HStack>
+    </Stack>
   );
 }
