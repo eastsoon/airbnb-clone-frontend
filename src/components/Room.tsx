@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  color,
   Grid,
   HStack,
   Image,
@@ -9,7 +10,6 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { FaRegHeart, FaStar } from "react-icons/fa";
-
 export default function Room() {
   const textColor = useColorModeValue("gray.600", "gray.300");
   return (
@@ -34,7 +34,7 @@ export default function Room() {
           <Text display={"block"} as="b" noOfLines={1} fontSize="md">
             Ganggu-myeon, Yeongdeok-gun, 경상북도, 한국
           </Text>
-          <HStack spacing={1}>
+          <HStack _hover={{ color: "gold" }} spacing={1}>
             <FaStar size={15} />
             <Text>5.0</Text>
           </HStack>

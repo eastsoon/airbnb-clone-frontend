@@ -5,6 +5,8 @@ import {
   Heading,
   HStack,
   Image,
+  Skeleton,
+  SkeletonText,
   Text,
   useColorModeValue,
   VStack,
@@ -30,13 +32,12 @@ export default function Home() {
         "2xl": "repeat(5, 1fr)",
       }}
     >
-      {[
-        1, 2, 3, 4, 5, 6, 7, 7, 2, 1, 21, 32, 1, 23, 3, 1, 2, 2, 3, 1, 2, 3, 1,
-        23, 2, 123, 12, 3, 12, 3122, 2, 3, 4, 5, 1, 2, 3, 3, 4, 1, 2, 3, 4, 1,
-        2, 3, 1, 2,
-      ].map((index) => (
-        <Room key={index} />
-      ))}
+      <Box>
+        <Skeleton rounded="2xl" height={280} mb={7} />
+        <SkeletonText w="50%" noOfLines={2} mb={4} />
+        <SkeletonText w="50%" noOfLines={1} />
+      </Box>
+      <Room />
     </Grid>
   );
 }
