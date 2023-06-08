@@ -58,6 +58,8 @@ export default function Home() {
       ) : null}
       {data?.map((room) => (
         <Room
+          key={room.pk}
+          pk={room.pk}
           imgUrl={room.photos[0].file}
           name={room.name}
           rating={room.rating}
