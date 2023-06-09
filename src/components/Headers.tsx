@@ -8,12 +8,15 @@ import {
   useDisclosure,
   useColorModeValue,
   Stack,
+  Avatar,
 } from "@chakra-ui/react";
 import LoginModal from "./LoginModal";
 import { FaAirbnb, FaMoon, FaSun } from "react-icons/fa";
 import SignUpModal from "./SignUpModal";
 import { Link } from "react-router-dom";
+import useUser from "../lib/useUser";
 export default function Headers() {
+  const { userLoading, isLoggedIn, user } = useUser();
   const {
     isOpen: isLoginOpen,
     onClose: onLoginClose,
@@ -58,12 +61,20 @@ export default function Headers() {
           aria-label="Dark Mode"
           icon={<Icon />}
         />
-        <Button onClick={onLoginOpen}>Log in</Button>
-        <LightMode>
-          <Button onClick={onSignUpOpen} colorScheme={"red"}>
-            Sign Up
-          </Button>
-        </LightMode>
+        {!userLoading ? (
+          !isLoggedIn ? (
+            <>
+              <Button onClick={onLoginOpen}>Log in</Button>
+              <LightMode>
+                <Button onClick={onSignUpOpen} colorScheme={"red"}>
+                  Sign Up
+                </Button>
+              </LightMode>
+            </>
+          ) : (
+            <Avatar size={"md"} />
+          )
+        ) : null}
       </HStack>
       <LoginModal isOpen={isLoginOpen} onClose={onLoginClose} />
       <SignUpModal isOpen={isSignUpOpen} onClose={onSignUpClose} />
