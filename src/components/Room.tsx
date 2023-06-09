@@ -42,7 +42,7 @@ export default function Room({
           rounded="2xl"
           minH="280"
         >
-          <Image minH="280" src={imgUrl} />
+          <Image objectFit={"cover"} minH="280" minW="300" src={imgUrl} />
           <Button
             variant={"unstyled"}
             position="absolute"
