@@ -12,6 +12,7 @@ import {
 import LoginModal from "./LoginModal";
 import { FaAirbnb, FaMoon, FaSun } from "react-icons/fa";
 import SignUpModal from "./SignUpModal";
+import { Link } from "react-router-dom";
 export default function Headers() {
   const {
     isOpen: isLoginOpen,
@@ -46,7 +47,9 @@ export default function Headers() {
       borderBottomWidth={1}
     >
       <Box color={logoColor}>
-        <FaAirbnb size={"48"} />
+        <Link to={"/"}>
+          <FaAirbnb size={"48"} />
+        </Link>
       </Box>
       <HStack spacing={2}>
         <IconButton
