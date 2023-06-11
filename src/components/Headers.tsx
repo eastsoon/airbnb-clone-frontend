@@ -9,12 +9,19 @@ import {
   useColorModeValue,
   Stack,
   Avatar,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  useToast,
 } from "@chakra-ui/react";
 import LoginModal from "./LoginModal";
 import { FaAirbnb, FaMoon, FaSun } from "react-icons/fa";
 import SignUpModal from "./SignUpModal";
 import { Link } from "react-router-dom";
 import useUser from "../lib/useUser";
+import { logOut } from "../api";
+import { useQueryClient } from "@tanstack/react-query";
 export default function Headers() {
   const { userLoading, isLoggedIn, user } = useUser();
   const {
@@ -30,6 +37,25 @@ export default function Headers() {
   const { toggleColorMode } = useColorMode();
   const logoColor = useColorModeValue("red.500", "red.200");
   const Icon = useColorModeValue(FaMoon, FaSun);
+  const toast = useToast();
+  const queryClient = useQueryClient();
+  const onLogOut = async () => {
+    const toastId = toast({
+      title: "Login out....",
+      description: "Sad to see you go...",
+      status: "loading",
+      position: "bottom-right",
+    });
+
+    await logOut();
+    queryClient.refetchQueries(["me"]);
+    toast.update(toastId, {
+      title: "LogOut Done",
+      description: "See you latter~!",
+      status: "success",
+      duration: 1000,
+    });
+  };
   return (
     <Stack
       justifyContent={"space-between"}
@@ -72,7 +98,14 @@ export default function Headers() {
               </LightMode>
             </>
           ) : (
-            <Avatar name={user?.name} src={user?.avatar} size={"md"} />
+            <Menu>
+              <MenuButton>
+                <Avatar name={user?.name} src={user?.avatar} size={"md"} />
+              </MenuButton>
+              <MenuList>
+                <MenuItem onClick={onLogOut}> Log out</MenuItem>
+              </MenuList>
+            </Menu>
           )
         ) : null}
       </HStack>
