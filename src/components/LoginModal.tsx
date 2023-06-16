@@ -13,6 +13,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { FaUser, FaLock } from "react-icons/fa";
 import SocialLogin from "./SocialLogin";
 
@@ -21,21 +22,15 @@ interface LoginModalProps {
   onClose: () => void;
 }
 
+interface IForm {
+  username: string;
+  password: string;
+}
+
 export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const onChange = (event: React.SyntheticEvent<HTMLInputElement>) => {
-    const { name, value } = event.currentTarget;
-    if (name === "username") {
-      setUsername(value);
-    }
-    if (name === "password") {
-      setPassword(value);
-    }
-  };
-  const onSubmit = (event: React.SyntheticEvent<HTMLDivElement>) => {
-    event.preventDefault();
-    console.log(username, password);
+  const { register, handleSubmit } = useForm<IForm>();
+  const onSubmit = (data: IForm) => {
+    console.log(data);
   };
   return (
     <Modal motionPreset="slideInBottom" onClose={onClose} isOpen={isOpen}>
@@ -43,7 +38,7 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
       <ModalContent>
         <ModalHeader>Log in</ModalHeader>
         <ModalCloseButton />
-        <ModalBody as="form" onSubmit={onSubmit}>
+        <ModalBody as="form" onSubmit={handleSubmit(onSubmit)}>
           <VStack>
             <InputGroup>
               <InputLeftElement
@@ -55,9 +50,7 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
               />
               <Input
                 required
-                name="username"
-                onChange={onChange}
-                value={username}
+                {...register("username", { required: true })}
                 variant={"filled"}
                 placeholder="UserName"
               />
@@ -72,10 +65,8 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
               />
               <Input
                 required
-                name="password"
+                {...register("password", { required: true })}
                 type="password"
-                onChange={onChange}
-                value={password}
                 variant={"filled"}
                 placeholder="Password"
               />
